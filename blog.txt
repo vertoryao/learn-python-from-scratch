@@ -1,0 +1,37 @@
+ubuntu14.0.4安装更换源后不要upgrade
+将info文件夹更名
+命令如下：
+root@wangguan-ubuntu:~# mv /var/lib/dpkg/info/ /var/lib/dpkg/info_old/
+
+再新建一个新的info文件夹 
+命令如下：
+root@wangguan-ubuntu:~# mkdir /var/lib/dpkg/info/
+
+apt-get update
+命令如下：
+root@wangguan-ubuntu:~# apt-get update
+
+重新安装 
+命令如下：
+root@wangguan-ubuntu:~# apt-get -f install
+
+执行完上一步操作后会在新的info文件夹下生成一些文件，现将这些文件全部移到info_old文件夹下 
+命令如下：
+root@wangguan-ubuntu:~# mv /var/lib/dpkg/info/* /var/lib/dpkg/info_old/
+
+把自己新建的info文件夹删掉 
+命令如下：
+root@wangguan-ubuntu:~# rm -rf /var/lib/dpkg/info
+
+把info_old文件夹重新改回info 
+命令如下：
+root@wangguan-ubuntu:~# mv /var/lib/dpkg/info_old/ /var/lib/dpkg/info/
+
+至此 apt-get 重新安装完毕。
+
+安装MySQL-python报错：
+error: command 'x86_64-linux-gnu-gcc' failed with exit status 1
+原因：gcc版本过低安装gcc4.9
+apt-get install gcc-4.9
+rm /usr/bin/x86_64-linux-gnu-gcc
+ln -s /usr/bin/gcc-4.9 /usr/bin/x86_64-linux-gnu-gcc
